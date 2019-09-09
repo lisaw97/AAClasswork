@@ -1,3 +1,4 @@
+require 'byebug'
 class PolyTreeNode
 
     attr_reader :parent, :children, :value
@@ -29,8 +30,10 @@ class PolyTreeNode
     end
 
     def dfs(target_value)
+
         return self if @value == target_value
         @children.each do |child|
+            child.value
             res = child.dfs(target_value)
             return res if !res.nil?
         end
