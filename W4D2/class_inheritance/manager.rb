@@ -18,7 +18,7 @@ class Manager < Employee
     total = 0
     @employees.each do |employee|
       if employee.is_a?(Manager)
-        total += employee.salary_sum
+        total += employee.salary_sum + employee.salary
       else 
         total += employee.salary
       end
