@@ -91,13 +91,12 @@ def andrews_films_and_leads
   # Andrews' played in.
   execute(<<-SQL)
   select movies.title, actors.name
-  from (select movies.id as sub_id
+  from (select movies.id as sub_id, movies.title
     from movies 
     join castings on castings.movie_id = movies.id
     join actors on castings.actor_id = actors.id 
     where actors.name = 'Julie Andrews') as sub
-  join movies on movies.id = sub.sub_id
-  join castings on castings.movie_id = movies.id
+  join castings on castings.movie_id = sub_id
   join actors on castings.actor_id = actors.id
   where ord = 1;
   SQL
