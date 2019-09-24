@@ -24,12 +24,7 @@ require_relative './sqlzoo.rb'
 
 def example_query
   execute(<<-SQL)
-    SELECT
-      *
-    FROM
-      movies
-    WHERE
-      title = 'Doctor No'
+    
   SQL
 end
 
@@ -38,7 +33,7 @@ def films_from_sixty_two
   execute(<<-SQL)
     select id, title
     from movies
-    where yr = 1962;
+    where yr = 1962
   SQL
 end
 
@@ -47,7 +42,7 @@ def year_of_kane
   execute(<<-SQL)
     select yr
     from movies
-    where title = 'Citizen Kane';
+    where title = 'Citizen Kane'
   SQL
 end
 
@@ -58,8 +53,8 @@ def trek_films
   execute(<<-SQL)
     select id, title, yr
     from movies
-    where title like 'Star Trek%'
-    order by yr;
+    where title like '%Star Trek%'
+    order by yr
   SQL
 end
 
@@ -68,7 +63,7 @@ def films_by_id
   execute(<<-SQL)
     select title
     from movies
-    where id = 1119 or id = 1595 or id = 1768;
+    where id = 1119 or id = 1595 or id = 1768
   SQL
 end
 
@@ -77,7 +72,7 @@ def glenn_close_id
   execute(<<-SQL)
     select id
     from actors
-    where name = 'Glenn Close';
+    where name = 'Glenn Close'
   SQL
 end
 
@@ -86,7 +81,7 @@ def casablanca_id
   execute(<<-SQL)
     select id
     from movies
-    where title  = 'Casablanca';
+    where title = 'Casablanca'
   SQL
 end
 
@@ -95,10 +90,13 @@ def casablanca_cast
   # in the previous question directly in your query (for example, id = 1).
   execute(<<-SQL)
     select actors.name
-    from castings
-    join movies on movie_id = movies.id
-    join actors on actor_id = actors.id
-    where movies.title = 'Casablanca';
+    from actors
+    join castings on actors.id = actor_id
+    where movie_id in (
+      select id
+      from movies
+      where title = 'Casablanca'
+    )
   SQL
 end
 
@@ -106,9 +104,12 @@ def alien_cast
   # Obtain the cast list for the film 'Alien'
   execute(<<-SQL)
     select actors.name
-    from castings
-    join movies on movie_id = movies.id
-    join actors on actor_id = actors.id
-    where movies.title = 'Alien';
+    from actors
+    join castings on actor_id = actors.id
+    where movie_id in (
+      select id
+      from movies
+      where title = 'Alien'
+    )
   SQL
 end
