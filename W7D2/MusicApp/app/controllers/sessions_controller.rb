@@ -5,18 +5,21 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by_credentials(params[:user][:email], params[:user][:password])
+    user = User.find_by_credentials(
+      params[:user][:email], 
+      params[:user][:password]
+    )
     if user
-      log_in_user!(user)
+      login(user)
       redirect_to user_url(user.id)
     else
-      render json: "Couldn't log in; check your email and password", status: 422
+      flash.now[:errors] = user.errors.full_messages
+      render :new
     end
   end
 
   def destroy
-    current_user.reset_session_token!
-    session[:session_token] = nil
+    logout
     redirect_to new_session_url
   end
 

@@ -1,8 +1,6 @@
 class ApplicationController < ActionController::Base
 
-  before_action :require_login, only: [:show, :destroy]
-  before_action :require_logout, only: [:new, :create]
-  helper_method :current_user, :logged_in?, :log_in_user!
+  helper_method :current_user, :logged_in?
   
   def current_user
     @current_user ||= User.find_by(session_token: session[:session_token])
@@ -12,20 +10,18 @@ class ApplicationController < ActionController::Base
     !!current_user
   end
 
-  def log_in_user!(user)
+  def login(user)
+    @current_user = user
     session[:session_token] = user.reset_session_token!
   end
 
   def require_login
-    unless logged_in?
-      redirect_to new_session_url
-    end
+    redirect_to new_session_url unless logged_in?
   end
 
-  def require_logout
-    if logged_in?
-      redirect_to user_url(current_user.id)
-    end
+  def logout
+    current_user.reset_session_token!
+    session[:session_token] = nil 
   end
 
 end

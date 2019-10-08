@@ -10,23 +10,22 @@
   </head>
 
   <body>
-  <header>
+
     <h1>MusicApp</h1>
-    <nav>
-      <% if logged_in? %>
-        <form action="<%= session_url %>" method="post">
-          <input type="hidden" name="_method" value="delete">
-          <%= auth_token %>
-          <input type="submit" value="Log Out">
-  
-        </form>
-      <% else %>
-        <a href="<%= new_session_url %>">Log In!</a>
-      <% end %>
-    </nav>
-  </header>
 
+    <% if logged_in? %>
+      <h2>Welcome, <%= current_user.email %></h2>
 
+      <form action="<%= session_url %>" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <%= auth_token %>
+        <input type="submit" value="Log Out">
+      </form>
+    <% else %>
+      <a href="<%= new_session_url %>">Log In</a>
+    <% end %>
+
+    <%= flash[:errors] if flash[:errors] %>
     <%= yield %>
   </body>
 </html>
