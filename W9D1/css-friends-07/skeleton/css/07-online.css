@@ -1,0 +1,11 @@
+/* PHASE 7: Online */
+.ribbon {
+  background-color: green;
+  color: white;
+  font-size: 15px;
+  width: 120px; 
+  position: absolute;
+  text-align: center;
+  overflow: hidden;
+  transform: rotate(-45deg) translateX(-30px) translateY(-12px);
+}
