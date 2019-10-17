@@ -1,0 +1,15 @@
+/* PHASE 9: Forms */
+.form {
+  display: flex;
+}
+
+.form-fieldset {
+  border: 2px solid black;
+  background-color: yellow;
+  flex-direction: column;
+  width: 800px;
+}
+
+.input {
+  border: 2px solid black;
+}
